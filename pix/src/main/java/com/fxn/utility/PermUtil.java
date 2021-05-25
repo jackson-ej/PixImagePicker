@@ -60,8 +60,8 @@ public abstract class PermUtil {
             final List<String> permissionsList = new ArrayList<String>();
             if (!addPermission(permissionsList, Manifest.permission.CAMERA, activity))
                 permissionsNeeded.add("CAMERA");
-            if (!addPermission(permissionsList, Manifest.permission.READ_EXTERNAL_STORAGE, activity))
-                permissionsNeeded.add("READ_EXTERNAL_STORAGE");
+            if (!addPermission(permissionsList, Manifest.permission.WRITE_EXTERNAL_STORAGE, activity))
+                permissionsNeeded.add("WRITE_EXTERNAL_STORAGE");
             if (mode != Options.Mode.Picture && !addPermission(permissionsList, Manifest.permission.RECORD_AUDIO, activity)) {
                 permissionsNeeded.add("RECORD_AUDIO");
             }
@@ -83,8 +83,8 @@ public abstract class PermUtil {
             final List<String> permissionsList = new ArrayList<String>();
             if (!addPermission(permissionsList, Manifest.permission.CAMERA, fragment.getActivity()))
                 permissionsNeeded.add("CAMERA");
-            if (!addPermission(permissionsList, Manifest.permission.READ_EXTERNAL_STORAGE, fragment.getActivity()))
-                permissionsNeeded.add("READ_EXTERNAL_STORAGE");
+            if (!addPermission(permissionsList, Manifest.permission.WRITE_EXTERNAL_STORAGE, fragment.getActivity()))
+                permissionsNeeded.add("WRITE_EXTERNAL_STORAGE");
             if (mode != Options.Mode.Picture && !addPermission(permissionsList, Manifest.permission.RECORD_AUDIO, fragment.getActivity())) {
                 permissionsNeeded.add("RECORD_AUDIO");
             }
