@@ -354,8 +354,7 @@ public class Pix extends AppCompatActivity implements View.OnTouchListener {
     public void returnObjects() {
         ArrayList<String> list = new ArrayList<>();
         for (Img i : selectionList) {
-            list.add(i.getUrl());
-            // Log.e("Pix images", "img " + i.getUrl());
+            list.add(i.getContentUrl());
         }
         Intent resultIntent = new Intent();
         resultIntent.putStringArrayListExtra(IMAGE_RESULTS, list);
