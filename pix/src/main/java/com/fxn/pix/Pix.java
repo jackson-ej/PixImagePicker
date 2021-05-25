@@ -30,6 +30,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.FileProvider;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.ViewCompat;
@@ -65,6 +66,8 @@ import com.otaliastudios.cameraview.size.SizeSelector;
 import com.otaliastudios.cameraview.size.SizeSelectors;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -444,12 +447,7 @@ public class Pix extends AppCompatActivity implements View.OnTouchListener {
         camera.addCameraListener(new CameraListener() {
             @Override
             public void onPictureTaken(PictureResult result) {
-                File dir = null;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                    dir = getExternalFilesDir(options.getPath());
-                } else {
-                    dir = Environment.getExternalStoragePublicDirectory(options.getPath());
-                }
+                File dir = new File(getFilesDir()+"/"+options.getPath()+"/");
 
                 if (!dir.exists()) {
                     dir.mkdirs();
@@ -464,7 +462,7 @@ public class Pix extends AppCompatActivity implements View.OnTouchListener {
                     @Override
                     public void onFileReady(@Nullable File photo) {
                         Utility.vibe(Pix.this, 50);
-                        Img img = new Img("", "", photo.getAbsolutePath(), "", 1);
+                        Img img = new Img("", FileProvider.getUriForFile(Pix.this, "com.iq.pix", photo).toString(), photo.getAbsolutePath(), "", 1);
                         selectionList.add(img);
                         //Log.e("result photo", "->" + photo.getAbsolutePath());
                         Utility.scanPhoto(Pix.this, photo);
@@ -477,7 +475,7 @@ public class Pix extends AppCompatActivity implements View.OnTouchListener {
             public void onVideoTaken(VideoResult result) {
                 // A Video was taken!
                 Utility.vibe(Pix.this, 50);
-                Img img = new Img("", "", result.getFile().getAbsolutePath(), "", 3);
+                Img img = new Img("", FileProvider.getUriForFile(Pix.this, "com.iq.pix", result.getFile()).toString(), result.getFile().getAbsolutePath(), "", 3);
                 selectionList.add(img);
                 Utility.scanPhoto(Pix.this, result.getFile());
                 camera.setMode(Mode.PICTURE);
@@ -637,12 +635,7 @@ public class Pix extends AppCompatActivity implements View.OnTouchListener {
                     return false;
                 }
                 camera.setMode(Mode.VIDEO);
-                File dir = null;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                    dir = getExternalFilesDir(options.getPath());
-                } else {
-                    dir = Environment.getExternalStoragePublicDirectory(options.getPath());
-                }
+                File dir = new File(getFilesDir()+"/"+options.getPath()+"/");
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
